@@ -83,6 +83,14 @@ abstract class AbstractIndexer implements IndexerActionInterface, MviewActionInt
             } catch (\Exception $e) {
                 $this->logger->critical($e);
             }
+
+            $r = new \ReflectionObject($entity);
+            $p = $r->getProperty('categoryCollection');
+            $p->setAccessible(true);
+            $p->setValue($entity, null);
+
+            $entity->clearInstance();
+            unset($entity);
         }
     }
 
